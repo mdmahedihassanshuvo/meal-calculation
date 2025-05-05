@@ -1,0 +1,25 @@
+<style>
+    h4 a {
+        font-size: 28px;
+        text-decoration: none;
+        color: #fff;
+    }
+
+    h4.text-center {
+        text-align: center;
+    }
+    .kalpurush {
+        font-family: 'Kalpurush', sans-serif;
+    }
+</style>
+
+<h4 class="text-center kalpurush">
+    <a href="/">ড্যাশবোর্ড</a>
+</h4>
+<hr>
+<a class="link kalpurush" href="{% url 'member' %}">
+    <i class="fas fa-user me-2"></i> সদস্য
+</a>
+
+<!-- Optional: Block for extra sidebar content -->
+{% block sidebar_extra %}{% endblock %}
