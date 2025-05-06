@@ -1,0 +1,39 @@
+/* kalpurush */
+@font-face {
+    font-family: 'kalpurush';
+    src: url('kalpurush.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+.kalpurush {
+    font-family: 'kalpurush' !important;
+}
+
+/* sutonny */
+@font-face {
+    font-family: 'sutonny';
+    src: url('sutonny_mj/sutonny_mj_regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'sutonny';
+    src: url('sutonny_mj/sutonny_mj_bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+.sutonny {
+    height: auto!important;
+    font-family: 'sutonny' !important;
+}
+
+/* algerian */
+@font-face {
+    font-family: 'algerian';
+    src: url('algerian.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+.algerian {
+    font-family: 'algerian' !important;
+}

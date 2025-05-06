@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'Core',
     'dashboard',
-    'content',
     'member',
+    'content',
 ]
 
 MIDDLEWARE = [

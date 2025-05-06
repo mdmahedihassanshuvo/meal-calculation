@@ -27,6 +27,10 @@ urlpatterns = [
         '',
         include('Core.api.urls')
     ),
+    path(
+        'member/',
+        include('member.api.urls')
+    ),
 ]
 
 # Add this at the end of the file to serve static files in development
