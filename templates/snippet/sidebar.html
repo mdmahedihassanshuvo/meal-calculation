@@ -1,24 +1,29 @@
 <style>
+    @import url('https://fonts.maateen.me/kalpurush/font.css');
     h4 a {
         font-size: 28px;
         text-decoration: none;
         color: #fff;
+        padding: 10px 20px !important;
     }
 
     h4.text-center {
         text-align: center;
     }
     .kalpurush {
-        font-family: 'Kalpurush', sans-serif;
+        font-family: 'Kalpurush', sans-serif !important;
     }
 </style>
 
-<h4 class="text-center kalpurush">
-    <a href="/">ড্যাশবোর্ড</a>
+<h4 class="text-center">
+    <a class="kalpurush" href="/">ড্যাশবোর্ড</a>
 </h4>
 <hr>
 <a class="link kalpurush" href="{% url 'member' %}">
     <i class="fas fa-user me-2"></i> সদস্য
+</a>
+<a class="link kalpurush" href="#">
+    <i class="fas fa-money-bill-wave me-2"></i> ডিপোজিট
 </a>
 
 <!-- Optional: Block for extra sidebar content -->
