@@ -1,5 +1,7 @@
 # DJANGO IMPORTS
-from django.views.generic import TemplateView, ListView
+from django.views.generic import (
+    TemplateView, ListView, DetailView
+)
 
 # LOCAL IMPORTS
 from member.models import Member
@@ -17,4 +19,15 @@ class MemberListView(ListView):
         context = super().get_context_data(**kwargs)
         queryset = Member.objects.all()
         context['objects'] = queryset
+        return context
+
+
+class MemberDetailsView(DetailView):
+    model = Member
+    template_name = 'content/member_details.html'
+    context_object_name = 'member'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        member = self.object
         return context

@@ -23,7 +23,7 @@
                         <p class="card-text text-muted kalpurush">ডাকনাম নেই</p>
                     {% endif %}
                 </div>
-                <a href="#" class="link btn btn-primary rounded-pill px-4 mb-3 kalpurush">
+                <a href="{% url 'content:member_details' member.pk %}" class="link btn btn-primary rounded-pill px-4 mb-3 kalpurush">
                     বিস্তারিত দেখুন
                 </a>
             </div>
