@@ -18,8 +18,12 @@ urlpatterns = [
         include('dashboard.urls')
     ),
     path(
-        'content/',
+        '',
         include('content.urls')
+    ),
+    path(
+        '',
+        include('bookkeeping.urls')
     ),
 
     # api url includes...................
@@ -30,6 +34,10 @@ urlpatterns = [
     path(
         'member/',
         include('member.api.urls')
+    ),
+    path(
+        'bookkeeping/',
+        include('bookkeeping.api.urls')
     ),
 ]
 
