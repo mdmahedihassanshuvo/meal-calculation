@@ -26,8 +26,3 @@ class MemberDetailsView(DetailView):
     model = Member
     template_name = 'content/member_details.html'
     context_object_name = 'member'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        member = self.object
-        return context

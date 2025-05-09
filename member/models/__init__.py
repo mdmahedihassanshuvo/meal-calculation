@@ -1,9 +1,9 @@
 from .member import (
+    CommonModel,
     Member,
-    Deposit
 )
 
 __all__ = [
+    CommonModel,
     Member,
-    Deposit,
 ]

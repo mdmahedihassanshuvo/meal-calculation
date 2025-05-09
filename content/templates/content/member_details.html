@@ -1,9 +1,97 @@
 {% extends 'base.html' %}
 
-{% block title %}MC | সদস্য তালিকা{% endblock %}
+{% block title %}MC | সদস্যের তথ্য{% endblock %}
 
 {% block content %}
-<h2 class="text-center mb-3 fw-bold kalpurush">সদস্য তালিকা</h2>
+<div class="container mt-4">
 
+    <h2 class="text-center mb-4 fw-bold kalpurush">সদস্যের বিস্তারিত তথ্য</h2>
+    <hr>
 
+    <!-- Top Stats Section -->
+    <div class="row text-center mb-4">
+        <div class="col-md-4">
+            <div class="card shadow rounded-3 p-3">
+                <h5 class="kalpurush">ডিপোজিটের পরিমাণ</h5>
+                <h3 class="kalpurush">
+                    <span class="kalpurush">
+                        ৳ {{ member.total_deposit_amount|default_if_none:"0.000" }}
+                    </span>
+                </h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow rounded-3 p-3">
+                <h5 class="kalpurush">খরচের পরিমাণ</h5>
+                <span class="kalpurush">৳ 0.000</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow rounded-3 p-3">
+                <h5 class="kalpurush">মোট মিল</h5>
+                <span class="kalpurush text-primary">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile & Chart Section -->
+    <div class="row g-4">
+        <!-- Profile Card -->
+        <div class="col-md-4">
+            <div class="card shadow rounded-3 text-center p-3">
+                {% if member.image %}
+                    <img src="{{ member.image.url }}" class="rounded-circle mx-auto mt-2" style="width: 140px; height: 140px; object-fit: cover;">
+                {% else %}
+                    <img src="../../../static/images/avatar.jpeg" class="rounded-circle mx-auto mt-2" style="width: 140px; height: 140px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h4 class="fw-bold kalpurush">{{ member.name }}</h4>
+                    <p class="text-muted kalpurush mb-1">
+                        ডাকনাম: 
+                        {% if member.nickname %}
+                            {{ member.nickname }}
+                        {% else %}
+                            নেই
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Card -->
+        <div class="col-md-8">
+            <div class="card shadow rounded-3 p-3">
+                <h5 class="kalpurush mb-3">ডিপোজিট বনাম খরচ পরিমাণ</h5>
+                <canvas id="memberChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
 {% endblock %}
+
+{% comment %}
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('memberChart').getContext('2d');
+    const memberChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['ডিপোজিট', 'খরচ'],
+            datasets: [{
+                label: 'টাকার পরিমাণ',
+                data: [{{ member.total_deposit_amount }}, 0],
+                backgroundColor: ['#28a745', '#dc3545']
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>
+{% endblock %}
+{% endcomment %}
