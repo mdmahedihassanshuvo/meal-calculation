@@ -25,12 +25,13 @@
 
         .sidebar {
             height: 100vh;
-            background-color: #343a40;
+            background-color: #1f0330;
             color: #fff;
             padding-top: 1rem;
             position: fixed;
             width: 250px;
             transition: all 0.3s ease;
+            border-radius: 5px;
         }
 
         .sidebar.collapsed {
@@ -41,6 +42,8 @@
             padding: 2rem;
             transition: all 0.3s ease;
             margin-left: 250px;
+            background-color: #ecedff;
+            min-height: calc(100vh - 70px);
         }
 
         .content.expanded {
@@ -57,6 +60,7 @@
             padding: 8px 12px;
             font-size: 18px;
             z-index: 1000;
+            border-radius: 10px;
         }
     </style>
     
