@@ -24,28 +24,17 @@ class Member(CommonModel):
         null=True,
         blank=True
     )
+    image = models.ImageField(
+        _('Image'),
+        upload_to='member_images/',
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.name
 
-
-class Deposit(CommonModel):
-    name = models.ForeignKey(
-        Member,
-        on_delete=models.CASCADE,
-        related_name='deposits',
-        verbose_name=_('Name')
-    )
-    amount = models.DecimalField(
-        _('Deposit Amount'),
-        max_digits=12,
-        decimal_places=3,
-        null=True,
-        blank=True
-    )
-    deposite_date = models.DateField(
-        _('Diposit Date')
-    )
-
-    def __str__(self):
-        return f"{self.name} - {self.amount}"
+    @property
+    def total_deposit_amount(self):
+        total = self.deposits.aggregate(total=models.Sum('amount'))['total']
+        return total if total else 0.000

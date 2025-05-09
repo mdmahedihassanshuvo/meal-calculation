@@ -1,6 +1,10 @@
 # local_settings.py
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    '192.168.0.107',
+    'localhost'
+]
 
 DEBUG = True  # for local development
 

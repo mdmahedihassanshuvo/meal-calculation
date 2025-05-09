@@ -1,6 +1,12 @@
-from .member import MemberTemplateView
+from .member import (
+    MemberTemplateView,
+    MemberListView,
+    MemberDetailsView
+)
 
 
 __all__ = [
-    MemberTemplateView
+    MemberTemplateView,
+    MemberListView,
+    MemberDetailsView
 ]
