@@ -1,12 +1,14 @@
 <style>
     @import url('https://fonts.maateen.me/kalpurush/font.css');
     .dashboard a {
-        font-size: 28px;
+        font-size: 22px;
         text-decoration: none;
         background-color: #ecedff;
         color: black;
         margin: 0px 10px;
         border-radius: 10px;
+        display: block;
+        padding: 5px 0px;
     }
 
     .link {
@@ -26,7 +28,7 @@
     <a class="kalpurush" href="/">ড্যাশবোর্ড</a>
 </h4>
 <hr>
-<a class="link kalpurush" href="{% url 'member' %}">
+<a class="link kalpurush" href="{% url 'content:member' %}">
     <i class="fas fa-user me-2"></i> সদস্য
 </a>
 <a class="link kalpurush" href="#">

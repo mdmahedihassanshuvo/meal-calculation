@@ -24,6 +24,12 @@ class Member(CommonModel):
         null=True,
         blank=True
     )
+    image = models.ImageField(
+        _('Image'),
+        upload_to='member_images/',
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.name

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}MC | Member{% endblock %}
+{% block title %}MC | সদস্য{% endblock %}
 
 {% block content %}
 <h2 class="text-center mb-5 fw-bold kalpurush">সদস্য ড্যাশবোর্ড</h2>
@@ -13,9 +13,9 @@
         <div class="card-body d-flex flex-column justify-content-center">
           <h5 class="card-title fw-bold kalpurush pointer">মোট সদস্য</h5>
           <h2 class="fw-bold sutonny members"></h2>
-          <button type="button" class="btn btn-outline-primary rounded-pill px-4 mt-3" id="member_list" data-bs-toggle="modal" data-bs-target="#memberListModal">
+          <a href="{% url 'content:member_list' %}" class="btn btn-outline-primary rounded-pill px-4 mt-3">
             সদস্য দেখুন
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -67,23 +67,6 @@
           </div>
           <button type="submit" class="btn btn-primary rounded-pill px-4" id="add_member">সংরক্ষণ করুন</button>
         </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Member List Modal -->
-<div class="modal fade" id="memberListModal" tabindex="-1" aria-labelledby="memberListModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content rounded-4">
-      <div class="modal-header">
-        <h5 class="modal-title kalpurush fw-bold" id="memberListModalLabel">সদস্য তালিকা</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row g-4" id="memberCardContainer">
-          <!-- Member cards will be loaded here via JS -->
-        </div>
       </div>
     </div>
   </div>
@@ -158,10 +141,6 @@
         console.error(xhr.responseText);
       }
     });
-
-    $('#member_list').on('click', function() {
-      
-    })
 
   });
 </script>

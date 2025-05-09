@@ -1,6 +1,7 @@
-from .member import MemberTemplateView
+from .member import MemberTemplateView, MemberListView
 
 
 __all__ = [
-    MemberTemplateView
+    MemberTemplateView,
+    MemberListView,
 ]

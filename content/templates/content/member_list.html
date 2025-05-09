@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}MC | সদস্য তালিকা{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-5 fw-bold kalpurush">সদস্য তালিকা</h2>
+
+<div class="container">
+    <div class="row g-4">
+        {% for member in objects %}
+        <div class="col-md-4">
+            <div class="card shadow rounded-3 text-center">
+                {% if member.image %}
+                    <img src="{{ member.image.url }}" class="card-img-top rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;">
+                {% else %}
+                    <img src="../../../static/images/avatar.jpeg" class="card-img-top rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title fw-bold kalpurush">{{ member.name }}</h5>
+                    {% if member.nickname %}
+                        <p class="card-text text-muted kalpurush">ডাকনাম: {{ member.nickname }}</p>
+                    {% else %}
+                        <p class="card-text text-muted">ডাকনাম নেই</p>
+                    {% endif %}
+                </div>
+                <a href="#" class="link btn btn-primary rounded-pill px-4 mb-3">
+                    বিস্তারিত দেখুন
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">কোনো সদস্য পাওয়া যায়নি।</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
