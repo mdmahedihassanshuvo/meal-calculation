@@ -2,7 +2,10 @@
 from django.urls import path
 
 # LOCAL IMPORTS
-from bookkeeping.views import DepositTemplateView
+from bookkeeping.views import (
+    DepositTemplateView,
+    MealTemplateView
+)
 
 app_name = 'bookkeeping'
 
@@ -11,5 +14,10 @@ urlpatterns = [
         'deposit/',
         DepositTemplateView.as_view(),
         name='deposit'
-    )
+    ),
+    path(
+        'meal/',
+        MealTemplateView.as_view(),
+        name='meal'
+    ),
 ]
