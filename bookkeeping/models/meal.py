@@ -22,4 +22,4 @@ class Meal(CommonModel):
     )
 
     def __str__(self):
-        return f"{self.member} - {self.amount}"
+        return f"{self.member} - {self.meal_count} on {self.meal_date}"

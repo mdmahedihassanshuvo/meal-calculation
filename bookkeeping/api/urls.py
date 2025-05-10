@@ -2,7 +2,10 @@
 from django.urls import path
 
 # LOCAL IMPORTS
-from bookkeeping.api.views import DepositListCreateAPIView
+from bookkeeping.api.views import (
+    DepositListCreateAPIView,
+    MealListCreateAPIView
+)
 
 
 urlpatterns = [
@@ -15,5 +18,15 @@ urlpatterns = [
         'create-deposit/',
         DepositListCreateAPIView.as_view(),
         name='create_deposit'
+    ),
+    path(
+        'meal-list/',
+        MealListCreateAPIView.as_view(),
+        name='meal_list'
+    ),
+    path(
+        'create-meal/',
+        MealListCreateAPIView.as_view(),
+        name='create_meal'
     ),
 ]
