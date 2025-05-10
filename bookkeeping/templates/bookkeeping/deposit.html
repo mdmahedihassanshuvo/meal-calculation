@@ -7,7 +7,10 @@
 {% block content %}
 <div class="mt-2">
 
-    <h2 class="text-center mb-4 fw-bold kalpurush">ডিপোজিট তালিকা</h2>
+    <div class="mb-4">
+        <h2 class="text-center fw-bold kalpurush mb-0">ডিপোজিট তালিকা</h2>
+        <p class="text-center kalpurush">মোট: <span class="sutonny total_deposit"></span></p>
+    </div>
 
     <!-- Form Section -->
     <div class="mb-4 border p-3 rounded shadow-sm bg-light">
@@ -30,6 +33,7 @@
 
     <!-- Deposit List Section -->
     <div class="m-card bg-white">
+        <div class="card-header kalpurush mb-2">ডিপোজিটের তালিকা</div>
         <table class="p-table">
             <thead class="text-white">
                 <tr class="kalpurush">
@@ -44,7 +48,7 @@
             <tfoot class="bg-light fw-bold">
                 <tr>
                     <td class="kalpurush text-end" colspan="2">মোট</td>
-                    <td class="sutonny text-end" id="total_deposit"></td>
+                    <td class="sutonny text-end total_deposit"></td>
                     <td></td>
                 </tr>
             </tfoot>
@@ -115,11 +119,11 @@
                 url: "{% url 'deposit_list' %}",
                 success: function(diposits) {
                     $('.diposit_list').empty();
-                    $('#total_deposit').empty();
+                    $('.total_deposit').empty();
                     const total_deposit = diposits.reduce(function(acc, diposit) {
                         return acc + parseFloat(diposit.amount);
                     }, 0);
-                    $('#total_deposit').text(parseFloat(total_deposit).toFixed(3))
+                    $('.total_deposit').text(parseFloat(total_deposit).toFixed(3))
 
                     if (diposits.length > 0) {
                         let newRows = '';

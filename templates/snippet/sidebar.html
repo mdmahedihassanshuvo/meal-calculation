@@ -19,6 +19,9 @@
     h4.text-center {
         text-align: center;
     }
+    .span-text {
+        width: 20%;
+    }
     .kalpurush {
         font-family: 'Kalpurush', sans-serif !important;
     }
@@ -31,13 +34,19 @@
 </h4>
 <hr>
 <a class="link kalpurush" href="{% url 'content:member' %}">
-    <i class="fas fa-user me-2"></i> সদস্য
+    <span class="me-2 span-text"><i class="fas fa-user"></i></span> সদস্য
 </a>
 <a class="link kalpurush" href="{% url 'bookkeeping:deposit' %}">
-    <i class="fas fa-money-bill-wave me-2"></i> ডিপোজিট
+    <span class="me-2 span-text"><i class="fas fa-money-bill-wave"></i></span> ডিপোজিট
 </a>
 <a class="link kalpurush" href="{% url 'bookkeeping:meal' %}">
-    <i class="fas fa-utensils me-2"></i> খাবার ব্যবস্থাপনা
+    <span class="me-2 span-text"><i class="fas fa-utensils"></i></span> খাবার ব্যবস্থাপনা
+</a>
+<a class="link kalpurush" href="{% url 'bookkeeping:expense' %}">
+    <span class="me-2 span-text"><i class="fas fa-money-check-alt"></i></span> খরচ ব্যবস্থাপনা
+</a>
+<a class="link kalpurush" href="#">
+    <span class="me-2 span-text"><i class="fas fa-file-alt"></i></span> প্রতিবেদন
 </a>
 
 <!-- Optional: Block for extra sidebar content -->
