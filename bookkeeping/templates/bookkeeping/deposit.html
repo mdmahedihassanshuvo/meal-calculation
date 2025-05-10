@@ -14,9 +14,7 @@
         <div class="row mb-2">
             <div class="col-md-4">
                 <label for="id_name" class="form-label kalpurush">সদস্যের নাম</label>
-                <select name="name" id="id_name" class="form-control" required>
-                    <option value="" class="kalpurush">-- সদস্য বাছাই করুন --</option>
-                </select>
+                <select name="name" id="id_name" class="form-control" required></select>
             </div>
             <div class="col-md-4">
                 <label for="id_amount" class="form-label kalpurush">পরিমাণ (৳)</label>
@@ -64,6 +62,7 @@
         $('#id_name').select2({
             placeholder: "-- সদস্য বাছাই করুন --",
             allowClear: true,
+            width: '100%',
             ajax: {
                 url: "{% url 'member_list' %}",
                 dataType: 'json',
@@ -135,12 +134,6 @@
                             `;
                         });
                         $('.diposit_list').append(newRows);
-                    } else {
-                        $('.diposit_list').append(
-                            `<tr>
-                                <td colspan="4" class="text-danger text-center">কোনো ডিপোজিট পাওয়া যায়নি।</td>
-                            </tr>`
-                        );
                     }
                 },
                 error: function(error) {
@@ -148,7 +141,6 @@
                 }
             });
         }
-
 
     })
 </script>
