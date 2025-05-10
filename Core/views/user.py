@@ -17,6 +17,6 @@ class LoginView(TemplateView):
 
 
 class LogoutAPIView(APIView):
-    def post(self, request):
+    def get(self, request):
         logout(request)
         return HttpResponseRedirect(reverse('Core:login'))

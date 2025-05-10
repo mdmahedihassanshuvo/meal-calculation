@@ -17,76 +17,14 @@
 
     <!-- Custom Styles (Ensure No Conflict) -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    <style>
-        body {
-            overflow-x: hidden;
-        }
-
-        .sidebar {
-            height: 100vh;
-            background-color: #1f0330;
-            color: #fff;
-            padding-top: 1rem;
-            position: fixed;
-            width: 250px;
-            transition: all 0.3s ease;
-            border-radius: 5px;
-        }
-
-        .sidebar.collapsed {
-            margin-left: -250px;
-        }
-
-        .content {
-            padding: 2rem;
-            transition: all 0.3s ease;
-            margin-left: 250px;
-            background-color: #ecedff;
-            min-height: calc(100vh - 70px);
-        }
-
-        .content.expanded {
-            margin-left: 0;
-        }
-
-        .toggle-btn {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            background: #343a40;
-            color: #fff;
-            border: none;
-            padding: 8px 12px;
-            font-size: 18px;
-            z-index: 1000;
-            border-radius: 10px;
-        }
-    </style>
     
     {% block css_extra %}
     {% endblock %}
 </head>
 <body>
     <div>
-        <div class="">
-            <button id="toggleSidebar" class="toggle-btn"><i class="fas fa-bars"></i></button>
-        </div>
-
-        <!-- Include Navbar Snippet -->
-        {% include 'snippet/navbar.html' %}
-
-        <div class="">
-            <div class="sidebar" id="sidebar">
-                {% include 'snippet/sidebar.html' %}
-            </div>
-    
-            <!-- Main Content Section -->
-            <div id="content" class="content">
-                {% block content %}
-                {% endblock %}
-            </div>
-        </div>
+        {% block content %}
+        {% endblock %}
     </div>
 
     <!-- Bootstrap JS (Corrected Version) -->

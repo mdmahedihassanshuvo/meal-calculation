@@ -1,6 +1,7 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base_login.html' %}
 {% block title %}Login{% endblock %}
+{% block navbar_sidebar %}{% endblock %}
+{% block hide_navbar_sidebar %}true{% endblock %}
 {% block css_extra %}
 <style>
     .login-wrapper {
@@ -10,6 +11,7 @@
         align-items: center;
         min-height: 100vh;
         padding: 2rem;
+        width: 100%;
     }
 
     .login-form {
@@ -104,24 +106,24 @@
         <div class="row justify-content-center align-items-center">
             <div class="col-12 col-md-6">
                 <div class="login-form">
-                    <h2>Login Now</h2>
+                    <h2 class="kalpurush">Login Now</h2>
                     <form method="POST" action="{% url 'user_login' %}">
                         {% csrf_token %}
                         <div class="input-group">
-                            <label for="email">Email/Username</label>
-                            <input type="email" id="email" name="email" required>
+                            <label for="email" class="kalpurush">Email/Username</label>
+                            <input type="email" id="email" class="kalpurush" name="email" required>
                         </div>
                         <div class="input-group">
                             <label for="password">Password</label>
                             <input type="password" id="password" name="password" required>
                         </div>
-                        <button type="submit" class="btn">Login</button>
+                        <button type="submit" class="btn kalpurush">Login</button>
                     </form>
-                    <div class="or">OR</div>
+                    <div class="or kalpurush">OR</div>
                     <div class="google-btn">
-                        <img src="{% static 'assets/google-icon.png' %}" alt="Google"> <span>Login with Google</span>
+                        <img src="#" alt="Google"> <span class="kalpurush">Login with Google</span>
                     </div>
-                    <div class="login-link">Don't have any account? <a href="{% url 'Core:register' %}">Register</a></div>
+                    <div class="login-link kalpurush">Don't have any account? <a href="{% url 'Core:register' %}">Register</a></div>
                 </div>
             </div>
             
@@ -134,15 +136,4 @@
 {% endblock %}
 
 {% block js_extra %}
-<script>
-    $(document).ready(function () {
-        lottie.loadAnimation({
-            container: $("#lottie-container")[0],
-            renderer: "svg",
-            loop: true,
-            autoplay: true,
-            path: "{% static 'animations/animation.json' %}"
-        });
-    });
-</script>
-{% endblock js_extra %}
+{% endblock %}
