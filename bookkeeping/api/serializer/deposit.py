@@ -10,7 +10,12 @@ class DepositSerializers(serializers.ModelSerializer):
         model = Deposit
         fields = [
             'id',
-            'member'
+            'member',
             'amount',
             'deposite_date'
         ]
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['member'] = instance.member.name if instance.member else None # noqa
+        return representation

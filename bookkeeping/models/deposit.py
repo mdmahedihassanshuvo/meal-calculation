@@ -7,7 +7,7 @@ from member.models import CommonModel, Member
 
 
 class Deposit(CommonModel):
-    name = models.ForeignKey(
+    member = models.ForeignKey(
         Member,
         on_delete=models.CASCADE,
         related_name='deposits',
