@@ -6,22 +6,19 @@ from django.utils.translation import gettext_lazy as _
 from member.models import CommonModel, Member
 
 
-class Deposit(CommonModel):
+class Meal(CommonModel):
     member = models.ForeignKey(
         Member,
         on_delete=models.CASCADE,
-        related_name='deposits',
+        related_name='meals',
         verbose_name=_('Name')
     )
-    amount = models.DecimalField(
-        _('Deposit Amount'),
-        max_digits=12,
-        decimal_places=3,
-        null=True,
-        blank=True
+    meal_count = models.PositiveIntegerField(
+        _('Number of Meals'),
+        default=1
     )
-    deposite_date = models.DateField(
-        _('Diposit Date')
+    meal_date = models.DateField(
+        _('Meal Date')
     )
 
     def __str__(self):
