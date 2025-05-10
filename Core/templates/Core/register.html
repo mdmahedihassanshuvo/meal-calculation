@@ -1,5 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base_login.html' %}
 {% block title %}Register{% endblock %}
 {% block css_extra %}
 <style>
@@ -123,7 +122,7 @@
                     </form>
                     <div class="or text-center">OR</div>
                     <div class="google-btn">
-                        <img src="{% static 'assets/google-icon.png' %}" alt="Google"> 
+                        <img src="#" alt="Google"> 
                         <span>Register with Google</span>
                     </div>
                     <div class="login-link">Already have an account? 
@@ -140,16 +139,3 @@
 </div>
 {% endblock %}
 
-{% block js_extra %}
-<script>
-    $(document).ready(function() {
-        lottie.loadAnimation({
-            container: $("#lottie-container")[0],
-            renderer: "svg",
-            loop: true,
-            autoplay: true,
-            path: "{% static 'animations/animation.json' %}"
-        });
-    });
-</script>
-{% endblock js_extra %}
