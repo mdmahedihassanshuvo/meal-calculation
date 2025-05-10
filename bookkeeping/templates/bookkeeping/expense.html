@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}খরচ ব্যবস্থাপনা{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="mb-4">
+        <h2 class="text-center kalpurush mb-0">খরচ ব্যবস্থাপনা</h2>
+        <p class="text-center kalpurush">মোট: <span class="sutonny total_expense"></span></p>
+    </div>
+
+    <!-- Expense Form -->
+    <div class="m-card bg-light mb-3">
+        <div id="expense-form" class="row align-items-center mb-4">
+            <div class="col-md-3">
+                <label for="member" class="form-label kalpurush">সদস্যের নাম</label>
+                <select id="member" name="member" class="form-control" required>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="amount" class="form-label kalpurush">পরিমাণ (৳)</label>
+                <input type="number" step="0.001" id="amount" name="amount" class="form-control form-control sutonny" placeholder="এখানে পরিমাণ দিন" required>
+            </div>
+            <div class="col-md-3">
+                <label for="expense_date" class="form-label kalpurush">তারিখ</label>
+                <input type="date" id="expense_date" name="expense_date" class="form-control form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label for=""></label>
+                <button class="btn btn-primary w-100" id="create_expense">সংরক্ষণ করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense Table -->
+    <div class="m-card bg-light">
+        <div class="card-header kalpurush mb-2">খরচের তালিকা</div>
+        <table class="p-table table-bordered table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th class="kalpurush" width="5%">ক্রমিক</th>
+                    <th class="kalpurush">নাম</th>
+                    <th class="kalpurush">পরিমাণ (৳)</th>
+                    <th class="kalpurush">তারিখ</th>
+                </tr>
+            </thead>
+            <tbody id="expense_table_body">
+                <!-- Data loaded via AJAX -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="kalpurush text-end" colspan="2">মোট</td>
+                    <td class="sutonny text-end total_expense"></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_extra %}
+<script>
+    $(document).ready(function() {
+        get_expense();
+
+        $('#member').select2({
+            placeholder: "-- সদস্য বাছাই করুন --",
+            allowClear: true,
+            width: '100%',
+            ajax: {
+                url: "{% url 'member_list' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        search: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (member) {
+                            return {
+                                id: member.id,
+                                text: member.name
+                            };
+                        })
+                    };
+                },
+                cache: true
+            }
+        });
+
+        $('#create_expense').on('click', function() {
+            console.log('clickedddd')
+            const data = {
+                member: parseInt($('#member').val()),
+                amount: parseFloat($('#amount').val()).toFixed(3),
+                expense_date: $('#expense_date').val()
+            }
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'create_expense' %}",
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    get_expense();
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText)
+                }
+            })
+        })
+
+        function get_expense () {
+            $.ajax({
+                type: 'GET',
+                url: "{% url 'expense_list' %}",
+                success: function(expenses) {
+                    $('#expense_table_body').empty();
+                    $('.total_expense').empty();
+                    const total_expense = expenses.reduce(function(acc, expense) {
+                        return acc + parseFloat(expense.amount);
+                    }, 0);
+                    $('.total_expense').text(parseFloat(total_expense).toFixed(3))
+
+                    if (expenses.length > 0) {
+                        let newRows = '';
+                        expenses.forEach(function(expense, index) {
+                            newRows += `
+                                <tr>
+                                    <td class="sutonny text-center">${index + 1}</td>
+                                    <td class="kalpurush text-left">${expense.member}</td>
+                                    <td class="sutonny text-right">${expense.amount}</td>
+                                    <td class="sutonny text-center">${expense.expense_date}</td>
+                                </tr>
+                            `;
+                        });
+                        $('#expense_table_body').append(newRows);
+                    }
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+    })
+</script>
+{% endblock %}
