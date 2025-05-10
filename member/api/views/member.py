@@ -1,3 +1,6 @@
+# DJANGO IMPORTS
+from django.db.models import Q
+
 # REST_FRAMEWORK IMPORTS
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.response import Response
@@ -13,6 +16,15 @@ class MemberListCreateAPIView(ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Member.objects.all()
+        search_query = self.request.GET.get('search', None)
+        if search_query:
+            queryset = queryset.filter(
+                Q(
+                    name__icontains=search_query
+                ) | Q(
+                    nickname__icontains=search_query
+                )
+            )
         return queryset
 
     def create(self, request, *args, **kwargs):

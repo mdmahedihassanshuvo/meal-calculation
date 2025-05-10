@@ -7,7 +7,7 @@ from bookkeeping.api.views import DepositListCreateAPIView
 
 urlpatterns = [
     path(
-        'deposit-list/<int:member_id>/',
+        'deposit-list/',
         DepositListCreateAPIView.as_view(),
         name='deposit_list'
     ),
