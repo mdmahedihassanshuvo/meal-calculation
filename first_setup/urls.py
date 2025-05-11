@@ -9,6 +9,7 @@ urlpatterns = [
         'manage/',
         admin.site.urls
     ),
+    path('', include('pwa.urls')),
     path(
         'accounts/',
         include('Core.urls')

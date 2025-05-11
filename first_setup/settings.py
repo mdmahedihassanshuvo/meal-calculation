@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'member',
     'content',
     'bookkeeping',
+    'pwa'
 ]
 
 MIDDLEWARE = [
@@ -196,3 +197,38 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-success"
     }
 }
+
+PWA_APP_NAME = 'Meal Calculation'
+PWA_APP_DESCRIPTION = 'SDP 2'
+PWA_APP_THEME_COLOR = '#000000'
+PWA_APP_BACKGROUND_COLOR = '#ffffff'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+    {
+        'src': 'static/icons/desk_icon2.png',
+        'sizes': '192x192',
+        'type': 'image/png',
+    },
+    {
+        'src': 'static/icons/desk_icon2.png',
+        'sizes': '512x512',
+        'type': 'image/png',
+    },
+]
+PWA_APP_LANG = 'en-US'
+PWA_APP_SITES = {
+    'home': '/',
+}
+PWA_APP_SHORTCUTS = [
+    {
+        'name': 'Shortcut',
+        'url': '/target',
+        'description': 'Shortcut to a page in my application'
+    }
+]
+
+PWA_APP_DEBUG_MODE = DEBUG
