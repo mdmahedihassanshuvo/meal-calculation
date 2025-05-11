@@ -109,6 +109,9 @@
                 },
                 success: function(response) {
                     get_expense();
+                    $('#member').val(null).trigger('change');
+                    $('#amount').val('');
+                    $('#expense_date').val('');
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText)

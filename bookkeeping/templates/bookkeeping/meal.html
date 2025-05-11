@@ -110,8 +110,10 @@
                     'X-CSRFToken': '{{ csrf_token }}'
                 },
                 success: function(response) {
-                    console.log(response)
                     get_meal();
+                    $('#memberSelect').val(null).trigger('change');
+                    $('#mealCount').val(1);
+                    $('#mealDate').val(''); 
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText)
