@@ -6,7 +6,7 @@ ALLOWED_HOSTS = [
     'localhost'
 ]
 
-DEBUG = True  # for local development
+DEBUG = False  # for local development
 
 DATABASES = {
     'default': {
