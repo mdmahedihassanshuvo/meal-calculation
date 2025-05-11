@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-h$r4h-k^l=%=xizcv3-hdiq!0!5*2$z)ei154(jnp$c!31y-m2
 # SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-h$r4h-k^l=%=xizcv3-hdiq!0!5*2$z)ei154(jnp$c!31y-m2')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
