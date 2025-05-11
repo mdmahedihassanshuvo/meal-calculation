@@ -20,6 +20,8 @@ class MemberListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         queryset = Member.objects.all()
+        for qs in queryset:
+            print(f">>>>>>>>>>>>>>>>>>>>>>>>>>> qs: {qs.profile_image.url}")
         context['objects'] = queryset
         return context
 

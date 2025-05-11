@@ -11,5 +11,6 @@ class MemberSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'name',
-            'nickname'
+            'nickname',
+            'profile_image'
         ]
