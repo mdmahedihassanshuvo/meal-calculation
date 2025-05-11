@@ -41,10 +41,10 @@
             <table class="p-table table-striped table-hover mb-0">
                 <thead class="table-dark">
                     <tr>
-                        <th class="kalpurush w-5">ক্রমিক</th>
+                        <th class="kalpurush w-10">ক্রমিক</th>
                         <th class="kalpurush w-50">নাম</th>
-                        <th class="kalpurush w-30">খাবারের সংখ্যা</th>
-                        <th class="kalpurush w-15">তারিখ</th>
+                        <th class="kalpurush w-20">খাবারের সংখ্যা</th>
+                        <th class="kalpurush w-20">তারিখ</th>
                     </tr>
                 </thead>
                 <tbody id="mealTableBody">
@@ -110,8 +110,10 @@
                     'X-CSRFToken': '{{ csrf_token }}'
                 },
                 success: function(response) {
-                    console.log(response)
                     get_meal();
+                    $('#memberSelect').val(null).trigger('change');
+                    $('#mealCount').val(1);
+                    $('#mealDate').val(''); 
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText)

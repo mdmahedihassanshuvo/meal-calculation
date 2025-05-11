@@ -24,8 +24,8 @@ class Member(CommonModel):
         null=True,
         blank=True
     )
-    image = models.ImageField(
-        _('Image'),
+    profile_image = models.ImageField(
+        _('Profile Image'),
         upload_to='member_images/',
         null=True,
         blank=True

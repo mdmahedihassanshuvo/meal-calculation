@@ -4,13 +4,14 @@
 
 {% block content %}
 <h2 class="text-center mb-5 fw-bold kalpurush">সদস্য সমূহ</h2>
-<div class="row">
+<div class="row mb-5 justify-content-center">
   <div class="col-md-3">
-    <div class="card shadow-lg border-0 rounded-4 text-center h-100" style="min-height: 270px;">
-      <div class="card-body d-flex flex-column justify-content-center">
-        <h5 class="card-title fw-bold kalpurush pointer">মোট সদস্য</h5>
-        <h2 class="fw-bold sutonny members"></h2>
-        <a href="{% url 'content:member_list' %}" class="btn btn-outline-primary rounded-pill px-4 mt-3 kalpurush">
+    <div class="card shadow-lg border-0 rounded-4 text-center h-100" style="min-height: 270px; background: linear-gradient(to bottom right, #6a11cb, #2575fc); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <div class="card-body d-flex flex-column justify-content-center align-items-center text-white">
+        <i class="fas fa-users fa-3x mb-3"></i>
+        <h5 class="card-title fw-bold kalpurush pointer mb-3">মোট সদস্য</h5>
+        <h2 class="fw-bold sutonny members mb-3">150</h2>
+        <a href="{% url 'content:member_list' %}" class="btn btn-outline-light rounded-pill px-4 mt-3 kalpurush">
           সদস্য দেখুন
         </a>
       </div>
@@ -18,10 +19,11 @@
   </div>
 
   <div class="col-md-3">
-    <div class="card shadow-lg border-0 rounded-4 text-center h-100" style="min-height: 270px;">
-      <div class="card-body d-flex flex-column justify-content-center">
-        <h5 class="card-title fw-bold kalpurush pointer">নতুন সদস্য যোগ করুন</h5>
-        <button type="button" class="btn btn-outline-primary rounded-pill px-4 mt-3 kalpurush data-bs-toggle="modal" data-bs-target="#createMemberModal">
+    <div class="card shadow-lg border-0 rounded-4 text-center h-100" style="min-height: 270px; background: linear-gradient(to bottom right, #ff7e5f, #feb47b); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <div class="card-body d-flex flex-column justify-content-center align-items-center text-white">
+        <i class="fas fa-user-plus fa-3x mb-3"></i>
+        <h5 class="card-title fw-bold kalpurush pointer mb-3">নতুন সদস্য যোগ করুন</h5>
+        <button type="button" class="btn btn-outline-light rounded-pill px-4 mt-3 kalpurush" id="toggleMemberForm">
           যোগ করুন
         </button>
       </div>
@@ -29,41 +31,35 @@
   </div>
 
   <div class="col-md-3">
-    <div class="card shadow-lg border-0 rounded-4 text-center h-100" style="min-height: 270px;">
-      <div class="card-body d-flex flex-column justify-content-center">
-        <h5 class="card-title fw-bold kalpurush pointer">প্রতিবেদন দেখুন</h5>
-        <button type="button" class="btn btn-outline-primary rounded-pill px-4 mt-3 kalpurush" data-bs-toggle="modal" data-bs-target="#createMemberModal">
+    <div class="card shadow-lg border-0 rounded-4 text-center h-100" style="min-height: 270px; background: linear-gradient(to bottom right, #00c6ff, #0072ff); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+      <div class="card-body d-flex flex-column justify-content-center align-items-center text-white">
+        <i class="fas fa-file-alt fa-3x mb-3"></i>
+        <h5 class="card-title fw-bold kalpurush pointer mb-3">প্রতিবেদন দেখুন</h5>
+        <button type="button" class="btn btn-outline-light rounded-pill px-4 mt-3 kalpurush" data-bs-toggle="modal" data-bs-target="#createMemberModal">
           প্রতিবেদন
         </button>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- Create Member Modal -->
-<div class="modal fade" id="createMemberModal" tabindex="-1" aria-labelledby="createMemberModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content rounded-4">
-      <div class="modal-header">
-        <h5 class="modal-title kalpurush fw-bold" id="createMemberModalLabel">নতুন সদস্য যোগ করুন</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="memberForm">
-          <div class="mb-3">
-            <label for="name" class="form-label kalpurush">সদস্যের নাম</label>
-            <input type="text" class="form-control kalpurush" id="name" name="name" placeholder="নাম লিখুন" required>
-          </div>
-          <div class="mb-3">
-            <label for="nickname" class="form-label kalpurush">ডাকনাম (ঐচ্ছিক)</label>
-            <input type="text" class="form-control kalpurush" id="nickname" name="nickname" placeholder="ডাকনাম">
-          </div>
-          <button type="submit" class="btn btn-primary rounded-pill px-4 kalpurush id="add_member">সংরক্ষণ করুন</button>
-        </form>
-      </div>
+<div class="m-card mini-card mt-4 bg-light" id="memberFormContainer" style="display: none;">
+  <form id="memberForm" enctype="multipart/form-data">
+    <div class="mb-3">
+      <label for="name" class="form-label kalpurush">সদস্যের নাম</label>
+      <input type="text" class="form-control kalpurush" id="name" name="name" placeholder="নাম লিখুন" required>
     </div>
-  </div>
+    <div class="mb-3">
+      <label for="nickname" class="form-label kalpurush">ডাকনাম (ঐচ্ছিক)</label>
+      <input type="text" class="form-control kalpurush" id="nickname" name="nickname" placeholder="ডাকনাম">
+    </div>
+    <div class="mb-3">
+      <label for="profile_image" class="form-label kalpurush">প্রোফাইল ছবি (ঐচ্ছিক)</label>
+      <input type="file" class="form-control kalpurush" id="profile_image" name="profile_image" accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary rounded-pill px-4 kalpurush">সংরক্ষণ করুন</button>
+  </form>
 </div>
 
 {% endblock %}
@@ -71,26 +67,30 @@
 {% block js_extra %}
 <script>
   $(document).ready(function() {
+
+    member_list();
+
+    $('#toggleMemberForm').on('click', function() {
+      $('#memberFormContainer').toggle();
+    });
+
     $('#memberForm').on('submit', function(e) {
       e.preventDefault();
 
-      const data = {
-        name: $('#name').val(),
-        nickname: $('#nickname').val()
-      };
+      let formData = new FormData(this);
 
       $.ajax({
         type: 'POST',
         url: "{% url 'add_member' %}",
-        data: JSON.stringify(data),
-        contentType: 'application/json',
+        data: formData,
+        processData: false,
+        contentType: false,
         headers: {
           'X-CSRFToken': '{{ csrf_token }}'
         },
         success: function(response) {
-          console.log(response);
-          $('#createMemberModal').modal('hide');
           $('#memberForm')[0].reset();
+          member_list();
         },
         error: function(xhr, status, error) {
           console.error(xhr.responseText);
@@ -98,44 +98,22 @@
       });
     });
 
-    $.ajax({
-      type: 'GET',
-      url: "{% url 'member_list' %}",
-      headers: {
-        'X-CSRFToken': '{{ csrf_token }}'
-      },
-      success: function(members) {
-        // const container = $('#memberCardContainer');
-        // container.empty();
-        $('.members').empty();
-        $('.members').text(members.length);
-
-        // if (members.length === 0) {
-        //   container.append('<p class="text-center">কোন সদস্য পাওয়া যায়নি।</p>');
-        // } else {
-        //   members.forEach(function(member) {
-        //     const card = `
-        //       <div class="col-md-4 col-lg-3">
-        //         <div class="card shadow-sm border-0 rounded-4 text-center h-100">
-        //           <div class="card-body d-flex flex-column justify-content-center">
-        //             <img src="https://source.unsplash.com/100x100/?face,avatar" class="rounded-circle mb-3" alt="Avatar">
-        //             <h5 class="fw-bold kalpurush mb-1">${member.name}</h5>
-        //             <p class="text-muted mb-0">${member.nickname ? member.nickname : 'ডাকনাম নেই'}</p>
-        //           </div>
-        //         </div>
-        //       </div>
-        //     `;
-        //     container.append(card);
-        //   });
-        // }
-
-        // $('#memberListModal').modal('show');
-      },
-      error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-      }
-    });
-
+    function member_list() {
+      $.ajax({
+        type: 'GET',
+        url: "{% url 'member_list' %}",
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        success: function(members) {
+          $('.members').empty();
+          $('.members').text(members.length);
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
+    }
   });
 </script>
 {% endblock %}

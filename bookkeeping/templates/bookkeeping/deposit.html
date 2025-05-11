@@ -37,10 +37,10 @@
         <table class="p-table">
             <thead class="text-white">
                 <tr class="kalpurush">
-                    <th class="kalpurush" style="width: 50px;">ক্রমিক</th>
-                    <th class="kalpurush">সদস্যের নাম</th>
-                    <th class="kalpurush">পরিমাণ (৳)</th>
-                    <th class="kalpurush">ডিপোজিট তারিখ</th>
+                    <th class="kalpurush w-10">ক্রমিক</th>
+                    <th class="kalpurush w-50">সদস্যের নাম</th>
+                    <th class="kalpurush w-20">পরিমাণ (৳)</th>
+                    <th class="kalpurush w-20">ডিপোজিট তারিখ</th>
                 </tr>
             </thead>
             <tbody class="diposit_list ">
@@ -89,7 +89,7 @@
                 cache: true
             }
         });
-
+        
         $('#add_diposit').on('click', function() {
             const data = {
                 member: parseInt($('#id_name').val()),
@@ -106,6 +106,9 @@
                 },
                 success: function(response) {
                     get_diposits();
+                    $('#id_name').val(null).trigger('change');
+                    $('#id_amount').val('');
+                    $('#id_deposite_date').val('');
                 },
                 error: function(xhr, status, error) {
                     console.log(xhr.responseText)

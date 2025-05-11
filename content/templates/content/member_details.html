@@ -44,8 +44,8 @@
         <!-- Profile Card -->
         <div class="col-md-4">
             <div class="premium-card shadow-sm p-3 text-center">
-                {% if member.image %}
-                    <img src="{{ member.image.url }}" class="rounded-circle mx-auto mt-2 mb-2" style="width: 140px; height: 140px; object-fit: cover;">
+                {% if member.profile_image %}
+                    <img src="{{ member.profile_image.url }}" class="rounded-circle mx-auto mt-2 mb-2" style="width: 140px; height: 140px; object-fit: cover;">
                 {% else %}
                     <img src="../../../static/images/avatar.jpeg" class="rounded-circle mx-auto mt-2 mb-2" style="width: 140px; height: 140px; object-fit: cover;">
                 {% endif %}

@@ -3,6 +3,7 @@ from django.db.models import Q
 
 # REST_FRAMEWORK IMPORTS
 from rest_framework.generics import ListCreateAPIView
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -13,6 +14,7 @@ from member.api.serializer import MemberSerializer
 
 class MemberListCreateAPIView(ListCreateAPIView):
     serializer_class = MemberSerializer
+    parser_classes = [MultiPartParser, FormParser]
 
     def get_queryset(self):
         queryset = Member.objects.all()

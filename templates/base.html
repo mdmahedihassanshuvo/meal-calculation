@@ -1,10 +1,12 @@
 <!-- base.html -->
 {% load static %}
+{% load pwa %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% progressive_web_app_meta %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Default Title{% endblock %}</title>
     
@@ -17,6 +19,9 @@
 
     <!-- Custom Styles (Ensure No Conflict) -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Link to Manifest -->
+    <link rel="manifest" href="{% static 'js/manifest.json' %}">
 
     <style>
         body {
@@ -54,7 +59,7 @@
             position: fixed;
             top: 10px;
             left: 10px;
-            background: #343a40;
+            background: #1f0330;
             color: #fff;
             border: none;
             padding: 8px 12px;
@@ -111,6 +116,18 @@
             });
         });
     </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/static/js/service-worker.js').then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            },  function(error) {
+                    console.log('Service Worker registration failed:', error);
+                });
+            });
+        }
+    </script>
+      
 
     {% block js_extra %}
     {% endblock %}
