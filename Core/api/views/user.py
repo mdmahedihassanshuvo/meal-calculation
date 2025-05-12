@@ -27,7 +27,7 @@ class CustomUserCreateAPIView(CreateAPIView):
         if serializer.is_valid():
             user = serializer.save()
             login(request, user)  # ✅ Log the user in
-            return HttpResponseRedirect(reverse('dashboard'))
+            return HttpResponseRedirect(reverse('dashboard:dashboard'))
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -42,7 +42,7 @@ class LoginAPIView(GenericAPIView):
             user = authenticate(email=email, password=password)
             if user:
                 login(request, user)  # ✅ Log the user in (creates session)
-                return HttpResponseRedirect(reverse('dashboard'))
+                return HttpResponseRedirect(reverse('dashboard:dashboard'))
             return Response(
                 {'error': 'Invalid credentials'},
                 status=status.HTTP_401_UNAUTHORIZED

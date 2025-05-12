@@ -15,7 +15,7 @@ urlpatterns = [
         include('Core.urls')
     ),
     path(
-        '',
+        'dashboard/',
         include('dashboard.urls')
     ),
     path(
