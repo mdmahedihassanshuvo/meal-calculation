@@ -126,7 +126,6 @@
                 type: 'GET',
                 url: "{% url 'meal_list' %}",
                 success: function(meals) {
-                    console.log(meals)
                     $('#mealTableBody').empty();
                     $('.total_meal').empty();
                     const total_meal = meals.reduce(function(acc, meal) {
@@ -134,6 +133,9 @@
                     }, 0);
                     $('.total_meal').text(total_meal);
                     if (meals.length > 0) {
+                        meals.sort(function(a, b) {
+                            return new Date(b.create_at) - new Date(a.create_at);
+                        });
                         let newRows = '';
                         meals.forEach(function(meal, index) {
                             console.log(meal)
