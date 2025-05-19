@@ -41,7 +41,6 @@ class DashboardTemplateView(LoginRequiredMixin, TemplateView):
         context['member_meals'] = []
 
         for member in members:
-            print(f">>>>>>>>>>>>>> expense: {member.total_expense_amount}")
             # Handle possible None values for each member
             context['member_deposits'].append(float(member.total_deposit_amount) if member.total_deposit_amount else 0.0) # noqa
             context['member_expenses'].append(float(member.total_expense_amount) if member.total_expense_amount else 0.0) # noqa
