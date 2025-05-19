@@ -1,7 +1,178 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}MC | ড্যাশবোর্ড{% endblock %}
 
+{% block css_extra %}
+<style>
+    .dashboard-charts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .m-card {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .chart-container{
+        max-height: 350px !important;
+        width: 100% !important;
+    }
+    
+    #depositPieChart {
+        max-height: 350px;
+        width: 100% !important;
+    }
+    
+    #expenseBarChart {
+        max-height: 350px;
+        width: 100% !important;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<p>This is the content for the dashboard page.</p>
+<div class="m-card">
+    <table class="p-table">
+        <thead>
+            <tr>
+                <th class="kalpurush">ক্রম</th>
+                <th class="kalpurush">নাম</th>
+                <th class="kalpurush">জমা</th>
+                <th class="kalpurush">খরচ</th>
+                <th class="kalpurush">মিল</th>
+                <th class="kalpurush">মিল চার্জ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td class="sutonny text-center">{{ forloop.counter }}</td>
+                <td class="kalpurush">{{ member.name }}</td>
+                <td class="sutonny">{{ member.total_deposit_amount }}</td>
+                <td class="sutonny">{{ member.total_expense_amount }}</td>
+                <td class="sutonny">{{ member.total_meal }}</td>
+                <td class="sutonny">{{ member.meal_charge }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" class="kalpurush text-right">মোট</td>
+                <td class="sutonny">{{ total_deposit }}</td>
+                <td class="sutonny">{{ total_expense }}</td>
+                <td class="sutonny">{{ total_meal }}</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<div class="dashboard-charts mt-3">
+    <div class="m-card">
+        <h4 class="kalpurush text-center">Deposit Distribution</h4>
+        <div class="chart-container">
+            <canvas id="depositPieChart"></canvas>
+        </div>
+    </div>
+
+    <div class="m-card">
+        <h4 class="kalpurush text-center">Expense Distribution</h4>
+        <div class="chart-container">
+            <canvas id="expenseBarChart"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_extra %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Safely pass data to JavaScript -->
+{{ member_names|json_script:"memberNames" }}
+{{ member_deposits|json_script:"memberDeposits" }}
+{{ member_expenses|json_script:"memberExpenses" }}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get data from JSON script tags
+    const memberNames = JSON.parse(document.getElementById('memberNames').textContent);
+    const memberDeposits = JSON.parse(document.getElementById('memberDeposits').textContent);
+    const memberExpenses = JSON.parse(document.getElementById('memberExpenses').textContent);
+
+    // 1. Pie Chart for Deposits
+    const depositPieCtx = document.getElementById('depositPieChart');
+    if (depositPieCtx) {
+        new Chart(depositPieCtx, {
+            type: 'pie',
+            data: {
+                labels: memberNames,
+                datasets: [{
+                    label: 'Deposits (৳)',
+                    data: memberDeposits,
+                    backgroundColor: [
+                        '#FF6384', '#36A2EB', '#FFCE56', '#5DD39E',
+                        '#FF7C43', '#A05195', '#4DC9F6', '#F67019',
+                        '#F53794', '#537BC4'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Deposit Distribution',
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // 2. Bar Chart for Expenses
+    const expenseBarCtx = document.getElementById('expenseBarChart');
+    if (expenseBarCtx) {
+        new Chart(expenseBarCtx, {
+            type: 'bar',
+            data: {
+                labels: memberNames,
+                datasets: [{
+                    label: 'Expenses (৳)',
+                    data: memberExpenses,
+                    backgroundColor: '#FF6384',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Expense Distribution',
+                        font: {
+                            size: 14
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
 {% endblock %}
