@@ -4,7 +4,6 @@
 
 {% block content %}
 <div class="container">
-
     <h2 class="text-center mb-4 fw-bold kalpurush">সদস্যের বিস্তারিত তথ্য</h2>
 
     <!-- Top Stats Section -->
@@ -65,20 +64,85 @@
 
         <!-- Chart Card -->
         <div class="col-md-8">
-            <div class="premium-card shadow-sm p-3">
-                <h5 class="kalpurush mb-3">ডিপোজিট বনাম খরচ পরিমাণ</h5>
-                <canvas id="memberChart"></canvas>
+            <div class="m-card shadow-sm p-3">
+                <h5 class="kalpurush text-center mb-3">ডিপোজিট বনাম খরচ পরিমাণ</h5>
+                <div class="chart-container" style="position: relative; height:300px; width:100%">
+                    <canvas id="memberChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
-
 </div>
 {% endblock %}
 
-{% block extra_js %}
+{% block js_extra%}
 <script>
-    $(document).ready(function() {
-        // Chart.js or other scripts can be added here
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get values directly from Django template
+        const deposit = parseFloat("{{ deposit_amount }}") || 0;
+        const expense = parseFloat("{{ expense_amount }}") || 0;
+        
+        console.log("Deposit Amount:", deposit);
+        console.log("Expense Amount:", expense);
+
+        const ctx = document.getElementById('memberChart');
+        
+        if (!ctx) {
+            console.error("Could not find chart canvas element");
+            return;
+        }
+
+        try {
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['ডিপোজিট', 'খরচ'],
+                    datasets: [{
+                        label: 'টাকার পরিমাণ (৳)',
+                        data: [
+                            parseFloat('{{ deposit_amount|default:0 }}') || 0,
+                            parseFloat('{{ expense_amount|default:0 }}') || 0
+                        ],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 99, 132, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 99, 132, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '৳' + value;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '৳' + context.raw.toFixed(2);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            console.log("Chart created successfully");
+        } catch (error) {
+            console.error("Error creating chart:", error);
+        }
     });
 </script>
 {% endblock %}
