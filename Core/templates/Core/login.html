@@ -1,4 +1,5 @@
 {% extends 'base_login.html' %}
+{% load static %}
 {% block title %}Login{% endblock %}
 {% block navbar_sidebar %}{% endblock %}
 {% block hide_navbar_sidebar %}true{% endblock %}
@@ -97,11 +98,28 @@
         color: #7b52ff;
         text-decoration: none;
     }
+
+    .login-image-animate {
+        animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
 </style>
 {% endblock css_extra %}
 
 {% block content %}
-<div class="login-wrapper">
+<div class="login-wrapper bg-white">
     <div class="container">
         <div class="row justify-content-center align-items-center">
             <div class="col-12 col-md-6">
@@ -127,8 +145,8 @@
                 </div>
             </div>
             
-            <div class="col-md-6 d-none d-md-flex justify-content-end align-items-center">
-                <div id="lottie-container" style="width: 500px; height: 500px;"></div>
+            <div class="col-md-6 d-md-flex justify-content-start align-items-center">
+                <img class="login-image-animate" style="width: 450px;" src="{% static 'images/login.jpg' %}" alt="Login Image">
             </div>
         </div>
     </div>
