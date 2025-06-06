@@ -2,6 +2,7 @@
 from django.views.generic import (
     TemplateView, ListView, DetailView
 )
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 
 # LOCAL IMPORTS
@@ -9,11 +10,11 @@ from member.models import Member
 from bookkeeping.models import Meal, Expense
 
 
-class MemberTemplateView(TemplateView):
+class MemberTemplateView(LoginRequiredMixin, TemplateView):
     template_name = 'content/member.html'
 
 
-class MemberListView(ListView):
+class MemberListView(LoginRequiredMixin, ListView):
     model = Member
     template_name = 'content/member_list.html'
 
@@ -24,7 +25,7 @@ class MemberListView(ListView):
         return context
 
 
-class MemberDetailsView(DetailView):
+class MemberDetailsView(LoginRequiredMixin, DetailView):
     model = Member
     template_name = 'content/member_details.html'
     context_object_name = 'member'
