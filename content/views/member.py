@@ -1,17 +1,14 @@
 # DJANGO IMPORTS
 from django.views.generic import (
-    TemplateView, ListView, DetailView
+    ListView, DetailView
 )
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
 
 # LOCAL IMPORTS
 from member.models import Member
 from bookkeeping.models import Meal, Expense
-
-
-class MemberTemplateView(LoginRequiredMixin, TemplateView):
-    template_name = 'content/member.html'
 
 
 class MemberListView(LoginRequiredMixin, ListView):
@@ -30,11 +27,16 @@ class MemberDetailsView(LoginRequiredMixin, DetailView):
     template_name = 'content/member_details.html'
     context_object_name = 'member'
 
+    def get_object(self, queryset=None):
+        user_id = self.request.GET.get('user_id')
+        if user_id:
+            return get_object_or_404(Member, user__id=user_id)
+        return super().get_object(queryset)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         member = self.object
 
-        # Get totals (handle None cases)
         total_expense = Expense.objects.aggregate(
             total=Sum('amount')
         )['total'] or 0
@@ -42,17 +44,14 @@ class MemberDetailsView(LoginRequiredMixin, DetailView):
             total=Sum('meal_count')
         )['total'] or 0
 
-        # Calculate meal rate
         meal_rate = round(
             total_expense / total_meal, 3
         ) if total_meal > 0 else 0
 
-        # Get member's meal total
         member_meal_total = Meal.objects.filter(
             member=member
         ).aggregate(total=Sum('meal_count'))['total'] or 0
 
-        # Calculate member's expense
         get_expense = round(
             meal_rate * member_meal_total, 3
         ) if member_meal_total else 0

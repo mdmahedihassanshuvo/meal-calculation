@@ -34,6 +34,7 @@
 {% endblock %}
 
 {% block content %}
+{% if show_table %}
 <div class="m-card">
     <table class="p-table">
         <thead>
@@ -69,6 +70,7 @@
         </tfoot>
     </table>
 </div>
+{% endif %}
 
 <div class="dashboard-charts mt-3">
     <div class="m-card">

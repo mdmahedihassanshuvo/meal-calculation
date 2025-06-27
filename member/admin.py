@@ -9,7 +9,9 @@ from member.models import Member
 class MemberAdmin(admin.ModelAdmin):
     list_display = [
         'id',
-        'name'
+        'name',
+        'is_member',
+        'is_manager'
     ]
     search_fields = ['id', 'name']
     ordering = ['-id',]

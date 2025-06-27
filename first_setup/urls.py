@@ -36,6 +36,10 @@ urlpatterns = [
         'bookkeeping/',
         include('bookkeeping.urls')
     ),
+    path(
+        'organogram/',
+        include('organogram.urls')
+    ),
 
     # api url includes...................
     path(
@@ -49,6 +53,10 @@ urlpatterns = [
     path(
         'bookkeeping/',
         include('bookkeeping.api.urls')
+    ),
+    path(
+        'organogram/',
+        include('organogram.api.urls')
     ),
 ]
 

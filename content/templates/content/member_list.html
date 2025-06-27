@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}MC | সদস্য তালিকা{% endblock %}
 
@@ -31,33 +32,59 @@
 <h2 class="text-center mb-5 fw-bold kalpurush">সদস্য তালিকা</h2>
 
 <div class="container">
-    <div class="row g-4">
-        {% for member in objects %}
-        <div class="col-md-3">
-            <div class="card shadow-lg rounded-4 text-center hover-shadow h-100 d-flex flex-column">
-                {% if member.profile_image %}
-                    <img src="{{ member.profile_image.url }}" class="card-img-top rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;">
-                {% else %}
-                    <img src="../../../static/images/avatar.jpeg" class="card-img-top rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;">
-                {% endif %}
-                <div class="card-body flex-grow-1 d-flex flex-column">
-                    <h5 class="card-title fw-bold kalpurush" style="font-size: 1.2rem; letter-spacing: 0.5px;">{{ member.name }}</h5>
-                    {% if member.nickname %}
-                        <p class="card-text text-muted kalpurush" style="font-size: 0.9rem;">ডাকনাম: {{ member.nickname }}</p>
-                    {% else %}
-                        <p class="card-text text-muted kalpurush" style="font-size: 0.9rem;">ডাকনাম নেই</p>
-                    {% endif %}
-                    <div class="mt-auto">
-                        <a href="{% url 'content:member_details' member.pk %}" class="link btn btn-primary rounded-pill px-4 mb-3 kalpurush" style="transition: all 0.3s ease;">
-                            বিস্তারিত দেখুন
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>        
-        {% empty %}
-        <p class="text-center">কোনো সদস্য পাওয়া যায়নি।</p>
-        {% endfor %}
+    <div class="m-card">
+        <table class="p-table">
+            <thead>
+                <tr>
+                    <th>ক্রম</th>
+                    <th>নাম</th>
+                    <th>সদস্য</th>
+                    <th>ম্যানেজার</th>
+                    <th>একশন</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in objects %}
+                    <tr>
+                        <td class="sutonny text-center">
+                            {{ forloop.counter }}
+                        </td>
+                        <td class="kalpurush d-flex justify-content-start align-items-center gap-2">
+                            {% if member.profile_image %}
+                                <img src="{{ member.profile_image.url }}" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                            {% else %}
+                                <img src="{% static 'images/avatar.jpeg' %}" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                            {% endif %}
+                            <span class="ms-2">{{ member.name|default_if_none:'' }}</span>
+                        </td>                        
+                        <td class="kalpurush text-center">
+                            {% if member.is_member %}
+                                হ্যাঁ
+                            {% else %}
+                                না
+                            {% endif %}
+                        </td>
+                        <td class="kalpurush text-center">
+                            {% if member.is_manager %}
+                                হ্যাঁ
+                            {% else %}
+                                না
+                            {% endif %}
+                        </td>
+                        <td class="text-center kalpurush">
+                            <a href="{% url 'content:member_details' member.pk %}" class="btn btn-small btn-primary px-4 mb-3 kalpurush" style="transition: all 0.3s ease;">
+                                দেখুন
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <p class="text-center">কোনো সদস্য পাওয়া যায়নি।</p>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+
+            </tfoot>
+        </table>
     </div>
 </div>
 

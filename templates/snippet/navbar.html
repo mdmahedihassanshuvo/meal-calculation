@@ -28,7 +28,9 @@
                         <i class="fas fa-user-circle" style="font-size: 32px; color: black;"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="">My Profile</a></li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'content:member_details' 0 %}?user_id={{ request.user.pk }}">My Profile</a>
+                        </li>                                                  
                         <li><a class="dropdown-item" href="{% url 'admin:index' %}">Manage</a></li>
                         <li><a class="dropdown-item" href="{% url 'Core:logout' %}">Logout</a></li>
                     </ul>
