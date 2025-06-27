@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}MC | গ্রুপ তালিকা{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h2 class="text-center kalpurush mb-0">গ্রুপ তালিকা</h2>
+</div>
+<a href="{% url 'organogram:group_create' %}" class="btn btn-primary mb-3">গ্রুপ তৈরী করুন</a>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Members</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for group in groups %}
+    <tr>
+      <td>{{ group.group_name }}</td>
+      <td>{{ group.Member.count }}</td>
+      <td class="text-center">
+        {% if request.user.is_superuser or group.created_by == request.user %}
+        <button class="btn btn-sm btn-danger delete_group" data-id="{{ group.pk }}">Delete</button>
+        {% endif %}
+        <a href="{% url 'organogram:group_details' group.pk %}" class="btn btn-sm btn-primary">view</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+{% block js_extra %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  $(document).on('click', '.delete_group', function() {
+    var group_id = $(this).data('id');
+    Swal.fire({
+      title: 'আপনি কি নিশ্চিত?',
+      text: "এই গ্রুপটি ডিলিট করা হবে!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'হ্যাঁ, ডিলিট করুন!',
+      cancelButtonText: 'বাতিল করুন'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "{% url 'group_delete' 0 %}".replace('0', group_id),
+          type: 'DELETE',
+          headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+          success: function(response) {
+            Swal.fire('Deleted!', response.message, 'success').then(() => {
+              location.reload();
+            });
+          },
+          error: function(xhr) {
+            Swal.fire('Error!', xhr.responseJSON.message, 'error');
+          }
+        });
+      }
+    });
+  });
+</script>
+
+{% endblock %}

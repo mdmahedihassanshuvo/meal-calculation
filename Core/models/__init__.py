@@ -1,12 +1,15 @@
 from .user import (
     CustomUser,
     CustomUserManager,
-    # UserCategory
 )
+from .common import CommonFieldModel
+from .sidebar import MenuSection, MenuItem
 
 
 __all__ = [
     CustomUserManager,
     CustomUser,
-    # UserCategory
+    CommonFieldModel,
+    MenuSection,
+    MenuItem
 ]

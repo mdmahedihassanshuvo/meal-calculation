@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}MC | নতুন গ্রুপ{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <h2 class="text-center kalpurush mb-0">নতুন গ্রুপ তৈরি করুন</h2>
+</div>
+<div class="w-100 d-flex justify-content-center align-items-center">
+    <div class="m-card p-4" style="width: 500px;">
+        <form method="post" class="kalpurush">
+            {% csrf_token %}
+            <div class="form-group text-left">
+                <label for="id_group_name">গ্রুপের নাম:</label>
+                {{ form.group_name }}
+            </div>
+            <div class="form-group text-left">
+                <label for="id_Member">সদস্য নির্বাচন করুন:</label>
+                {{ form.Member }}
+            </div>
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary px-4">তৈরি করুন</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_extra %}
+<script>
+    $(document).ready(function() {
+      $('#id_Member').select2({
+        width: '100%',
+        placeholder: 'মেম্বার বেছে নিন',
+        allowClear: true
+      });
+    });
+</script>
+  
+{% endblock %}

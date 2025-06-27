@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'member',
     'content',
     'bookkeeping',
+    'organogram',
     'pwa'
 ]
 
@@ -82,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Core.context_processors.sidebar_menu',
             ],
         },
     },

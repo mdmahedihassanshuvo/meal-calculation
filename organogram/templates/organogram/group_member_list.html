@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}MC | সদস্য তালিকা{% endblock %}
+
+{% block css_extra %}
+<style>
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        font-weight: 600;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #6c757d;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-5 fw-bold kalpurush">সদস্য তালিকা</h2>
+
+<div class="container">
+    <div class="row g-4">
+        {% for member in members %}
+        <div class="col-md-3">
+            <div class="card shadow-lg rounded-4 text-center hover-shadow h-100 d-flex flex-column">
+                {% if member.profile_image %}
+                    <img src="{{ member.profile_image.url }}" class="card-img-top rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;">
+                {% else %}
+                    <img src="../../../static/images/avatar.jpeg" class="card-img-top rounded-circle mx-auto mt-3" style="width: 120px; height: 120px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body flex-grow-1 d-flex flex-column">
+                    <h5 class="card-title fw-bold kalpurush" style="font-size: 1.2rem; letter-spacing: 0.5px;">{{ member.name }}</h5>
+                    {% if member.nickname %}
+                        <p class="card-text text-muted kalpurush" style="font-size: 0.9rem;">ডাকনাম: {{ member.nickname }}</p>
+                    {% else %}
+                        <p class="card-text text-muted kalpurush" style="font-size: 0.9rem;">ডাকনাম নেই</p>
+                    {% endif %}
+                    <div class="mt-auto">
+                        <a href="{% url 'content:member_details' member.pk %}" class="link btn btn-primary rounded-pill px-4 mb-3 kalpurush" style="transition: all 0.3s ease;">
+                            বিস্তারিত দেখুন
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        {% empty %}
+        <p class="text-center">কোনো সদস্য পাওয়া যায়নি।</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

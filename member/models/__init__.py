@@ -1,9 +1,9 @@
 from .member import (
-    CommonModel,
+    CommonFieldModel,
     Member,
 )
 
 __all__ = [
-    CommonModel,
+    CommonFieldModel,
     Member,
 ]
