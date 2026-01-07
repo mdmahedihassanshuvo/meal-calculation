@@ -11,10 +11,12 @@ class ExpenseListCreateAPIView(ListCreateAPIView):
     serializer_class = ExpenseSerializers
 
     def get_queryset(self):
-        queryset = Expense.objects.all()
+        queryset = Expense.objects.all().order_by('order')
         member_id = self.request.query_params.get('member_id')
         if member_id:
-            queryset = queryset.filter(name_id=member_id)
+            queryset = queryset.filter(
+                name_id=member_id
+            ).order_by('order')
         return queryset
 
     def perform_create(self, serializer):

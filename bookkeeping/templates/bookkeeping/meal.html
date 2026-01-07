@@ -1,161 +1,172 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}MC | খাবার ব্যবস্থাপনা{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %}MC | খাবার
+ব্যবস্থাপনা{% endblock %} {% block content %}
 <div class="mt-2">
-    <div class="mb-4">
-        <h2 class="text-center fw-bold kalpurush mb-0">খাবার ব্যবস্থাপনা</h2>
-        <p class="text-center kalpurush">মোট: <span class="sutonny total_meal"></span></p>
-    </div>
+  <div class="mb-4">
+    <h2 class="text-center fw-bold kalpurush mb-0">খাবার ব্যবস্থাপনা</h2>
+    <p class="text-center kalpurush">
+      মোট: <span class="sutonny total_meal"></span>
+    </p>
+  </div>
 
-    <!-- Meal Form -->
-    <div class="m-card mb-4 bg-light">
-        <div class="card-header kalpurush mb-2">নতুন খাবার এন্ট্রি</div>
-        <div class="card-body">
-            <div class="row g-2">
-                <div class="col-md-4">
-                    <label class="form-label kalpurush">সদস্যের নাম</label>
-                    <select id="memberSelect" class="form-control"></select>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label kalpurush">খাবারের সংখ্যা</label>
-                    <input type="number" id="mealCount" class="form-control" value="1" min="1">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label kalpurush">তারিখ</label>
-                    <input type="date" id="mealDate" class="form-control">
-                </div>
-                <div class="col-md-2 d-flex align-items-end">
-                    <button id="addMealBtn" class="btn btn-success w-100">সংরক্ষণ করুন</button>
-                </div>
-            </div>
+  <!-- Meal Form -->
+  <div class="m-card mb-4 bg-light">
+    <div class="card-header kalpurush mb-2">নতুন খাবার এন্ট্রি</div>
+    <div class="card-body">
+      <div class="row g-2">
+        <div class="col-md-4">
+          <label class="form-label kalpurush">সদস্যের নাম</label>
+          <select id="memberSelect" class="form-control"></select>
         </div>
+        <div class="col-md-3">
+          <label class="form-label kalpurush">খাবারের সংখ্যা</label>
+          <input
+            type="number"
+            id="mealCount"
+            class="form-control"
+            value="1"
+            min="1"
+          />
+        </div>
+        <div class="col-md-3">
+          <label class="form-label kalpurush">তারিখ</label>
+          <input type="date" id="mealDate" class="form-control" />
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+          <button id="addMealBtn" class="btn btn-success w-100">
+            সংরক্ষণ করুন
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Meal List Table -->
-    <div class="m-card bg-light">
-        <div class="card-header kalpurush mb-2">খাবারের তালিকা</div>
-        <div class="card-body p-0">
-            <table class="p-table table-striped table-hover mb-0">
-                <thead class="table-dark">
-                    <tr>
-                        <th class="kalpurush w-10">ক্রমিক</th>
-                        <th class="kalpurush w-50">নাম</th>
-                        <th class="kalpurush w-20">খাবারের সংখ্যা</th>
-                        <th class="kalpurush w-20">তারিখ</th>
-                    </tr>
-                </thead>
-                <tbody id="mealTableBody">
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td class="kalpurush text-right" colspan="2">মোট</td>
-                        <td class="total_meal sutonny text-right"></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+  <!-- Meal List Table -->
+  <div class="m-card bg-light">
+    <div class="card-header kalpurush mb-2">খাবারের তালিকা</div>
+    <div class="card-body p-0">
+      <table class="p-table table-striped table-hover mb-0">
+        <thead class="table-dark">
+          <tr>
+            <th class="kalpurush w-10">ক্রমিক</th>
+            <th class="kalpurush w-50">নাম</th>
+            <th class="kalpurush w-20">খাবারের সংখ্যা</th>
+            <th class="kalpurush w-20">তারিখ</th>
+          </tr>
+        </thead>
+        <tbody id="mealTableBody"></tbody>
+        <tfoot>
+          <tr>
+            <td class="kalpurush text-right" colspan="2">মোট</td>
+            <td class="total_meal sutonny text-right"></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
+  </div>
 </div>
 
-{% endblock %}
-
-{% block js_extra %}
+{% endblock %} {% block js_extra %}
 <script>
-    $(document).ready(function() {
-        get_meal();
+  $(document).ready(function () {
+    get_meal();
 
-        $('#memberSelect').select2({
-            placeholder: "-- সদস্য বাছাই করুন --",
-            allowClear: true,
-            width: '100%',
-            ajax: {
-                url: "{% url 'member_list' %}",
-                dataType: 'json',
-                delay: 250,
-                data: function (params) {
-                    return {
-                        search: params.term
-                    };
-                },
-                processResults: function (data) {
-                    return {
-                        results: $.map(data, function (member) {
-                            return {
-                                id: member.id,
-                                text: member.name
-                            };
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
+    $("#memberSelect").select2({
+      placeholder: "-- সদস্য বাছাই করুন --",
+      allowClear: true,
+      width: "100%",
+      ajax: {
+        url: "{% url 'group_member_list' %}",
+        dataType: "json",
+        delay: 250,
+        data: function (params) {
+          return {
+            search: params.term,
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data, function (member) {
+              return {
+                id: member.id,
+                text: member.name,
+              };
+            }),
+          };
+        },
+        cache: true,
+      },
+    });
 
-        $('#addMealBtn').on('click', function() {
-            const data = {
-                member: parseInt($('#memberSelect').val()),
-                meal_count: $('#mealCount').val(),
-                meal_date: $('#mealDate').val()
-            }
-            $.ajax({
-                type: 'POST',
-                url: "{% url 'create_meal' %}",
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                success: function(response) {
-                    get_meal();
-                    $('#memberSelect').val(null).trigger('change');
-                    $('#mealCount').val(1);
-                    $('#mealDate').val(''); 
-                },
-                error: function(xhr, status, error) {
-                    console.log(xhr.responseText)
-                }
-            })
-        })
+    $("#addMealBtn").on("click", function () {
+      const data = {
+        member: parseInt($("#memberSelect").val()),
+        meal_count: $("#mealCount").val(),
+        meal_date: $("#mealDate").val(),
+      };
+      $.ajax({
+        type: "POST",
+        url: "{% url 'create_meal' %}",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        success: function (response) {
+          get_meal();
+          $("#memberSelect").val(null).trigger("change");
+          $("#mealCount").val(1);
+          $("#mealDate").val("");
+        },
+        error: function (xhr, status, error) {
+          console.log(xhr.responseText);
+        },
+      });
+    });
 
-        function get_meal () {
-            $.ajax({
-                type: 'GET',
-                url: "{% url 'meal_list' %}",
-                success: function(meals) {
-                    $('#mealTableBody').empty();
-                    $('.total_meal').empty();
-                    const total_meal = meals.reduce(function(acc, meal) {
-                        return acc + (meal.meal_count);
-                    }, 0);
-                    $('.total_meal').text(total_meal);
-                    if (meals.length > 0) {
-                        meals.sort(function(a, b) {
-                            return new Date(b.create_at) - new Date(a.create_at);
-                        });
-                        let newRows = '';
-                        meals.forEach(function(meal, index) {
-                            console.log(meal)
-                            newRows += `
+    function get_meal() {
+      $.ajax({
+        type: "GET",
+        url: "{% url 'meal_list' %}",
+        success: function (meals) {
+          $("#mealTableBody").empty();
+          $(".total_meal").empty();
+          const total_meal = meals.reduce(function (acc, meal) {
+            return acc + meal.meal_count;
+          }, 0);
+          $(".total_meal").text(total_meal);
+          if (meals.length > 0) {
+            meals.sort(function (a, b) {
+              return new Date(b.create_at) - new Date(a.create_at);
+            });
+            let newRows = "";
+            meals.forEach(function (meal, index) {
+              console.log(meal);
+              newRows += `
                                 <tr>
-                                    <td class="sutonny text-center">${index + 1}</td>
-                                    <td class="kalpurush text-left">${meal.member}</td>
-                                    <td class="sutonny text-right">${meal.meal_count}</td>
-                                    <td class="sutonny text-center">${meal.meal_date}</td>
+                                    <td class="sutonny text-center">${
+                                      index + 1
+                                    }</td>
+                                    <td class="kalpurush text-left">${
+                                      meal.member
+                                    }</td>
+                                    <td class="sutonny text-right">${
+                                      meal.meal_count
+                                    }</td>
+                                    <td class="sutonny text-center">${
+                                      meal.meal_date
+                                    }</td>
                                 </tr>
                             `;
-                        });
-                        $('#mealTableBody').append(newRows);
-                    }
-                },
-                error: function(error) {
-                    console.log(error);
-                }
             });
-        }
-    })
+            $("#mealTableBody").append(newRows);
+          }
+        },
+        error: function (error) {
+          console.log(error);
+        },
+      });
+    }
+  });
 </script>
 {% endblock %}

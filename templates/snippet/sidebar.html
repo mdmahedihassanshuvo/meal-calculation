@@ -3,61 +3,219 @@
 
 <style>
     @import url('https://fonts.maateen.me/kalpurush/font.css');
-    .dashboard a {
-        font-size: 22px;
-        text-decoration: none;
-        background-color: #ecedff;
-        color: black;
-        margin: 0px 10px;
-        border-radius: 10px;
-        display: block;
-        padding: 5px 0px;
+    
+    /* Base Styles */
+    .sidebar {
+        background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+        color: white;
+        min-height: 100vh;
+        padding: 0;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        font-family: 'Kalpurush', sans-serif;
     }
-
-    .link {
-        margin: 0px 10px;
-        border-radius: 10px;
-    }
-
-    h4.text-center {
+    
+    .dashboard-header {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 20px 15px;
         text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    .span-text {
-        width: 20%;
+    
+    .dashboard-title {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
     }
-    .kalpurush {
-        font-family: 'Kalpurush', sans-serif !important;
+    
+    .dashboard-title i {
+        font-size: 1.8rem;
     }
-    .section-title{
-        background-color: #fff;
-        color: black;
-        text-align: center;
-        margin: 0px;
-        padding: 5px 5px;
-        border-radius: 5px;
+    
+    .menu-container {
+        padding: 15px 0;
+    }
+    
+    /* Section Styles */
+    .section-title {
+        background-color: rgba(255, 255, 255, 0.15);
+        padding: 12px 20px;
+        margin: 15px 0 5px;
         cursor: pointer;
+        transition: all 0.3s ease;
+        border-left: 4px solid transparent;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .section-title:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-left-color: #4dabf7;
+    }
+    
+    .section-title h5 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #e9ecef;
+    }
+    
+    /* Menu Item Styles */
+    .menu-item {
+        display: block;
+        padding: 12px 20px 12px 50px;
+        color: #c2c7d0;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-left: 4px solid transparent;
+        position: relative;
+    }
+    
+    .menu-item:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-left-color: #4dabf7;
+        padding-left: 55px;
+    }
+    
+    .menu-item.active {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: white;
+        border-left-color: #4dabf7;
+    }
+    
+    .menu-icon {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        text-align: center;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+    }
+    
+    .menu-item:hover .menu-icon {
+        color: #4dabf7;
+        transform: translateY(-50%) scale(1.1);
+    }
+    
+    .menu-text {
+        font-size: 1rem;
+    }
+    
+    /* Nested Menu Items */
+    .nested-menu {
+        margin-left: 15px;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .sidebar {
+            min-height: auto;
+        }
+        
+        .menu-item {
+            padding: 10px 15px 10px 45px;
+        }
+        
+        .menu-item:hover {
+            padding-left: 50px;
+        }
     }
 </style>
 
-<h4 class="text-center dashboard">
-    <a class="kalpurush text-left ps-4" href="/">
-        <i class="fas fa-tachometer-alt"></i> ড্যাশবোর্ড
-    </a>
-</h4>
-<hr>
-
-{% for section in menu_sections %}
-    <div class="section-title">
-        <h5 class="kalpurush">{{ section.title }}</h5>
+<div class="sidebar">
+    <div class="dashboard-header">
+        <a href="/" class="dashboard-title">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>ড্যাশবোর্ড</span>
+        </a>
     </div>
-    {% for item in section.permitted_menu_items %}
-        <div>
-            <a class="link kalpurush" href="{{ item.get_absolute_url }}">
-                <span class="me-2 span-text"><i class="{{ item.icon_class }}"></i></span> {{ item.title }}
-            </a>
-        </div>
-    {% endfor %}
-{% endfor %}
+    
+    <div class="menu-container">
+        {% for section in menu_sections %} 
+            {% if section.is_manager == True or user.is_superuser %}
+            <div class="section-title">
+                <h5>{{ section.title }}</h5>
+                <i class="fas fa-chevron-down"></i>
+            </div>
 
-<!-- Optional: Block for extra sidebar content -->
-{% block sidebar_extra %}{% endblock %}
+            {% for item in section.permitted_menu_items %} 
+                {% if not item.parent %}
+                <a class="menu-item" href="{{ item.get_absolute_url }}">
+                    <span class="menu-icon">
+                        <i class="{{ item.icon_class }}"></i>
+                    </span>
+                    <span class="menu-text">{{ item.title }}</span>
+                </a>
+
+                {% comment %} Display child items if they exist {% endcomment %} 
+                {% if item.children.all %}
+                <div class="nested-menu">
+                    {% for child in item.children.all %}
+                    <a class="menu-item" href="{{ child.get_absolute_url }}">
+                        <span class="menu-icon">
+                            <i class="{{ child.icon_class }}"></i>
+                        </span>
+                        <span class="menu-text">{{ child.title }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endif %} 
+                {% endif %} 
+            {% endfor %} 
+            {% endif %} 
+        {% endfor %}
+    </div>
+</div>
+{% block sidebar_extra %}
+<script>
+    // Add interactivity to menu sections
+    document.addEventListener('DOMContentLoaded', function() {
+        const sectionTitles = document.querySelectorAll('.section-title');
+        
+        sectionTitles.forEach(title => {
+            title.addEventListener('click', function() {
+                // Find the next element sibling (menu items)
+                let nextElement = this.nextElementSibling;
+                
+                // Toggle visibility of menu items in this section
+                while (nextElement && nextElement.classList.contains('menu-item') || 
+                       nextElement && nextElement.classList.contains('nested-menu')) {
+                    nextElement.style.display = nextElement.style.display === 'none' ? 'block' : 'none';
+                    nextElement = nextElement.nextElementSibling;
+                }
+                
+                // Toggle chevron icon
+                const icon = this.querySelector('i.fa-chevron-down, i.fa-chevron-up');
+                if (icon) {
+                    if (icon.classList.contains('fa-chevron-down')) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                }
+            });
+        });
+        
+        // Highlight active menu item based on current URL
+        const currentUrl = window.location.pathname;
+        const menuItems = document.querySelectorAll('.menu-item');
+        
+        menuItems.forEach(item => {
+            if (item.getAttribute('href') === currentUrl) {
+                item.classList.add('active');
+            }
+        });
+    });
+</script>
+{% endblock %}

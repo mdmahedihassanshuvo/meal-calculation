@@ -1,0 +1,197 @@
+/* ----------------------------------------------------
+   Global Bangla Font
+---------------------------------------------------- */
+@import url('https://fonts.maateen.me/kalpurush/font.css');
+
+body, .kalpurush {
+    font-family: 'Kalpurush', sans-serif !important;
+}
+
+/* ----------------------------------------------------
+   Reset
+---------------------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* ----------------------------------------------------
+   Page Heading
+---------------------------------------------------- */
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #303f9f;
+}
+
+/* ----------------------------------------------------
+   Card Style
+---------------------------------------------------- */
+.m-card,
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: all 0.25s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* ----------------------------------------------------
+   Table Style
+---------------------------------------------------- */
+.p-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #fff;
+}
+
+.p-table thead {
+    background: #303f9f;
+    color: #fff;
+}
+
+.p-table thead th {
+    padding: 12px;
+    text-align: center;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+.p-table tbody tr {
+    border-bottom: 1px solid #e4e6ef;
+    transition: background 0.25s ease;
+}
+
+.p-table tbody tr:nth-child(even) {
+    background: #f5f7ff;
+}
+
+.p-table tbody tr:hover {
+    background: #ebedff;
+}
+
+.p-table td {
+    padding: 14px 10px;
+    font-size: 1rem;
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Profile Images */
+.table-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ----------------------------------------------------
+   Button Style
+---------------------------------------------------- */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-primary {
+    background: #3949ab;
+    color: #fff;
+    border: 1px solid #3949ab;
+}
+
+.btn-primary:hover {
+    background: #283593;
+    border-color: #283593;
+}
+
+/* Small button */
+.btn-small {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+}
+
+/* ----------------------------------------------------
+   Utility Classes
+---------------------------------------------------- */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+
+.mt-1 { margin-top: 5px; }
+.mt-2 { margin-top: 10px; }
+.mt-3 { margin-top: 20px; }
+.my-3 { margin: 20px 0; }
+
+.mb-1 { margin-bottom: 5px; }
+.mb-2 { margin-bottom: 10px; }
+.mb-3 { margin-bottom: 20px; }
+
+.p-1 { padding: 5px; }
+.p-2 { padding: 10px; }
+.p-3 { padding: 20px; }
+
+/* Flex */
+.d-flex { display: flex; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.align-center { align-items: center; }
+.gap-1 { gap: 8px; }
+.gap-2 { gap: 14px; }
+
+/* Rounded */
+.rounded { border-radius: 8px; }
+.rounded-circle { border-radius: 50%; }
+
+/* ----------------------------------------------------
+   Responsive Table (Mobile)
+---------------------------------------------------- */
+@media (max-width: 768px) {
+    .p-table thead {
+        display: none;
+    }
+
+    .p-table tbody tr {
+        display: block;
+        margin-bottom: 12px;
+        border-radius: 10px;
+        padding: 10px;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .p-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 8px;
+        text-align: right;
+    }
+
+    .p-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #3949ab;
+        text-align: left;
+    }
+
+    .table-avatar {
+        width: 40px;
+        height: 40px;
+    }
+}

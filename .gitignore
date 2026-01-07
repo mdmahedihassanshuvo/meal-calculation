@@ -16,10 +16,6 @@ __pycache__/
 # Database files
 *.sqlite3
 
-# Django media and static files (staticfiles are usually handled with collectstatic)
-static/
-media/
-
 # VS Code settings
 .vscode/
 
@@ -70,3 +66,6 @@ poetry.lock
 *.pyo
 *.pyd
 *.db
+
+# Local settings files
+first_setup/local_settings.py

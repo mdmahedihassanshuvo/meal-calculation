@@ -5,6 +5,8 @@ from django.contrib.auth.models import Group as AuthGroup
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.db.models import Q
+from django.contrib import messages
+from django.shortcuts import get_object_or_404
 
 # LOCAL IMPORTS
 from organogram.models import Group
@@ -39,23 +41,22 @@ class GroupCreateView(LoginRequiredMixin, CreateView):
         form.instance.created_by = self.request.user
         response = super().form_valid(form)
 
-        # Add creator as member
-        creator_member = Member.objects.get(user=self.request.user)
-        form.instance.Member.add(creator_member)
-
-        # Update their manager/member status
-        creator_member.is_manager = True
-        creator_member.is_member = False
-        creator_member.save()
-
-        # ✅ Add creator user to 'manager' group (auth Group)
         try:
-            manager_group = AuthGroup.objects.get(name='manager')
-        except AuthGroup.DoesNotExist:
-            # If manager group doesn't exist, optionally create it or skip
-            manager_group = AuthGroup.objects.create(name='manager')
+            creator_member = get_object_or_404(Member, user=self.request.user)
 
-        self.request.user.groups.add(manager_group)
+            form.instance.Member.add(creator_member)
+
+            creator_member.is_manager = True
+            creator_member.is_member = False
+            creator_member.save()
+
+            manager_group, created = AuthGroup.objects.get_or_create(name='manager') # noqa
+            self.request.user.groups.add(manager_group)
+
+            messages.success(self.request, f'Group "{form.instance.group_name}"created successfully!') # noqa
+
+        except Exception as e:
+            messages.error(self.request, f'Group created but there was an error: {str(e)}') # noqa
 
         return response
 
